@@ -3,164 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selamat Ulang Tahun Ibu!</title>
+    <title>Atshura Comics</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@500&display=swap');
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        .container {
-            width: 100vw;
-            height: 100vh;
-            background-color: #c0e399;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9; /* Warna latar abu-abu sangat terang */
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 20px;
-            gap: 40px;
+            padding: 50px 20px;
         }
-        .birthday-title {
-            font-family: 'Dancing Script', cursive;
-            font-size: clamp(2.5em, 8vw, 4em);
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            background-color: #ddd; /* Ganti dengan link gambar logo Anda nanti */
+            border-radius: 50%;
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+        h1 {
             color: #333;
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            /* --- PERBAIKAN #1: MENCEGAH TEKS BISA DI-BLOK --- */
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-        }
-        .start-button {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.2em;
-            font-weight: 500;
-            color: #333;
-            background-color: #f7c9d9;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            cursor: pointer;
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            z-index: 10;
-        }
-        .start-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-        }
-        .flying-heart {
-            position: fixed;
+            margin-bottom: 10px;
             font-size: 24px;
-            color: #ff79ac;
-            pointer-events: none;
-            opacity: 1;
-            animation: floatUp 1.5s ease-out forwards;
         }
-        @keyframes floatUp {
-            to {
-                transform: translateY(-200px);
-                opacity: 0;
-            }
+        p.bio {
+            color: #666;
+            margin-bottom: 30px;
+            text-align: center;
+            max-width: 400px;
         }
-        #whirlpool-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: #c0e399;
-            z-index: 9999;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+        .link-container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Jarak antar tombol */
         }
-        #whirlpool-overlay.active {
-            opacity: 1;
-            visibility: visible;
+        .link-btn {
+            display: block;
+            width: 100%;
+            padding: 15px 20px;
+            background-color: #1a1a1a;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
-        .swirling-heart {
-            position: absolute;
-            top: 50%; left: 50%;
-            font-size: 30px;
-            color: #f7c9d9;
-            animation: swirl 1.5s ease-in forwards;
+        .link-btn:hover {
+            background-color: #333;
+            transform: scale(1.02); /* Efek membesar sedikit saat disentuh */
         }
-        @keyframes swirl {
-            0% {
-                transform: translate(-50%, -50%) rotate(0deg) scale(3) translateX(150px) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -50%) rotate(720deg) scale(0) translateX(0px) rotate(-720deg);
-                opacity: 0;
-            }
+        .link-btn.primary {
+            background-color: #2962ff; /* Warna biru untuk tombol utama */
+        }
+        .link-btn.primary:hover {
+            background-color: #0039cb;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="birthday-title">Selamat Ulang Tahun Ibu!</h1>
-        <a id="startButton" href="https://www.revianchim.me">
-            <button class="start-button">Buka</button>
+
+    <!-- Nanti ganti 'src' dengan link gambar logo atau profil Anda -->
+    <img src="https://via.placeholder.com/120" alt="Profile" class="profile-img">
+    
+    <h1>Atshura Comics</h1>
+    <p class="bio">Selamat datang! Baca karya komik terbaru saya melalui tautan di bawah ini.</p>
+
+    <div class="link-container">
+        <!-- Tombol 1: Ebook Komik Utama -->
+        <a href="https://revianchim.me" class="link-btn primary" target="_blank">
+            📖 Baca Ebook Komik Utama
+        </a>
+
+        <!-- Tombol 2: Google Drive -->
+        <!-- Ganti tanda # di bawah dengan link Google Drive Anda -->
+        <a href="#" class="link-btn" target="_blank">
+            📁 Arsip Google Drive
         </a>
     </div>
-    <div id="whirlpool-overlay"></div>
-    <script>
-        // --- PERBAIKAN #2: MEMASTIKAN WEBSITE BEKERJA SAAT KEMBALI ---
-        window.addEventListener('pageshow', function(event) {
-            // event.persisted bernilai true jika halaman diambil dari cache (saat menekan tombol back)
-            if (event.persisted) {
-                // Cara paling ampuh adalah dengan memaksa muat ulang halaman
-                window.location.reload();
-            }
-        });
 
-        // Seluruh logika animasi halaman
-        function initializePage() {
-            // Logika untuk hati terbang saat diklik di mana saja
-            document.addEventListener('click', function(event) {
-                if (event.target.closest('#startButton')) return;
-                const heart = document.createElement('div');
-                heart.innerHTML = '❤️';
-                heart.className = 'flying-heart';
-                heart.style.left = (event.clientX - 10) + 'px';
-                heart.style.top = (event.clientY - 10) + 'px';
-                document.body.appendChild(heart);
-                setTimeout(() => { heart.remove(); }, 1500);
-            });
-
-            // Logika untuk animasi pusaran saat tombol diklik
-            const startLink = document.getElementById('startButton');
-            const whirlpoolOverlay = document.getElementById('whirlpool-overlay');
-            startLink.addEventListener('click', function(event) {
-                event.preventDefault(); 
-                whirlpoolOverlay.classList.add('active');
-                for (let i = 0; i < 30; i++) {
-                    const swirlingHeart = document.createElement('div');
-                    swirlingHeart.innerHTML = '💕';
-                    swirlingHeart.className = 'swirling-heart';
-                    swirlingHeart.style.animationDelay = (Math.random() * 0.5) + 's';
-                    whirlpoolOverlay.appendChild(swirlingHeart);
-                }
-                const destination = this.href;
-                setTimeout(() => { window.location.href = destination; }, 2000);
-            });
-        }
-
-        // Jalankan logika setelah halaman dimuat
-        initializePage();
-
-    </script>
 </body>
 </html>
