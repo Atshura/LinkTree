@@ -3,92 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cendikia Titan</title>
+    <title>Atshura Comics - Link Portal</title>
+    
+    <!-- Mengimpor Font Modern 'Inter' -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
+        /* === TEMA WARNA (DEEP INDIGO & VIOLET) === */
+        :root {
+            --bg-dark: #050511; /* Hitam kebiruan sangat gelap */
+            --accent-1: #4F46E5; /* Indigo */
+            --accent-2: #7C3AED; /* Violet */
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #FFFFFF;
+            --text-muted: #94A3B8;
+        }
+
         * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+            box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f9; /* Warna latar abu-abu sangat terang */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 50px 20px;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh; display: flex; justify-content: center; align-items: center;
+            overflow-x: hidden; position: relative;
         }
+
+        /* === ANIMASI BACKGROUND PARTICLES === */
+        #particles-js {
+            position: fixed; width: 100%; height: 100%; top: 0; left: 0;
+            z-index: -1; /* Berada di paling belakang */
+            background: linear-gradient(135deg, #050511 0%, #0B0B2A 100%);
+        }
+
+        /* Lingkaran Cahaya Lembut di Background */
+        .glow-circle {
+            position: absolute; width: 300px; height: 300px; border-radius: 50%;
+            background: var(--accent-2); filter: blur(100px); opacity: 0.15;
+            top: -50px; left: -50px; z-index: -1; animation: float 6s ease-in-out infinite;
+        }
+        .glow-circle-2 {
+            position: absolute; width: 250px; height: 250px; border-radius: 50%;
+            background: var(--accent-1); filter: blur(100px); opacity: 0.15;
+            bottom: -50px; right: -50px; z-index: -1; animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(20px) scale(1.05); }
+            100% { transform: translateY(0px) scale(1); }
+        }
+
+        /* === KARTU PROFIL GLASSMORPHISM (Efek Kaca 3D) === */
+        .card-container {
+            position: relative; width: 90%; max-width: 380px;
+            background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: 30px;
+            padding: 40px 30px; display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+            z-index: 10; 
+            /* Animasi masuk dari bawah */
+            animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            transform: translateY(50px); opacity: 0;
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* === FOTO PROFIL === */
         .profile-img {
-            width: 120px;
-            height: 120px;
-            background-color: #ddd; /* Ganti dengan link gambar logo Anda nanti */
-            border-radius: 50%;
-            margin-bottom: 20px;
-            object-fit: cover;
+            width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
+            border: 3px solid transparent;
+            background: linear-gradient(var(--bg-dark), var(--bg-dark)) padding-box, 
+                        linear-gradient(135deg, var(--accent-1), var(--accent-2)) border-box;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+            margin-bottom: 20px; transition: transform 0.3s ease;
         }
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 24px;
+        .profile-img:hover { transform: scale(1.05) rotate(5deg); }
+
+        /* === TEKS === */
+        h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 5px; }
+        .badge {
+            background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+            color: white; font-size: 10px; font-weight: 800; padding: 3px 8px;
+            border-radius: 8px; vertical-align: middle; margin-left: 5px; letter-spacing: 1px;
         }
-        p.bio {
-            color: #666;
-            margin-bottom: 30px;
-            text-align: center;
-            max-width: 400px;
-        }
-        .link-container {
-            width: 100%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px; /* Jarak antar tombol */
-        }
+        p.bio { font-size: 14px; color: var(--text-muted); font-weight: 500; text-align: center; margin-bottom: 30px; line-height: 1.5; }
+
+        /* === TOMBOL LINK === */
+        .link-container { width: 100%; display: flex; flex-direction: column; gap: 16px; }
+        
         .link-btn {
-            display: block;
-            width: 100%;
-            padding: 15px 20px;
-            background-color: #1a1a1a;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            position: relative; display: flex; align-items: center; justify-content: center; gap: 12px;
+            width: 100%; padding: 16px 20px; border-radius: 16px;
+            font-size: 15px; font-weight: 600; text-decoration: none; color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease; overflow: hidden;
         }
+
+        /* Efek Hover Keren pada Tombol */
         .link-btn:hover {
-            background-color: #333;
-            transform: scale(1.02); /* Efek membesar sedikit saat disentuh */
+            background: rgba(255, 255, 255, 0.1); transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
+
+        /* Tombol Utama (Berdar / Glowing) */
         .link-btn.primary {
-            background-color: #2962ff; /* Warna biru untuk tombol utama */
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            border: none; box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
         }
         .link-btn.primary:hover {
-            background-color: #0039cb;
+            box-shadow: 0 15px 30px rgba(124, 58, 237, 0.5); transform: translateY(-4px);
         }
+
+        .link-btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+        /* Footer Kredensial */
+        .footer-text { margin-top: 30px; font-size: 11px; color: rgba(255, 255, 255, 0.3); font-weight: 500; }
     </style>
 </head>
 <body>
 
-    <!-- Nanti ganti 'src' dengan link gambar logo atau profil Anda -->
-    <!-- Kode Baru -->
-    <img src="web1/image/profil.jpg" alt="Profile" class="profile-img">
-    
-    <h1>Cendikia Titan Aulia Pujiono</h1>
-    <p class="bio">Selamat datang! Silahkan Pilih dari opsi berikut:</p>
+    <!-- Latar Belakang Animasi Partikel -->
+    <div id="particles-js"></div>
+    <div class="glow-circle"></div>
+    <div class="glow-circle-2"></div>
 
-    <div class="link-container">
-        <!-- Tombol 1: Ebook Komik Utama -->
-        <a href="https://revianchim.me" class="link-btn primary" target="_blank">
-            📖 Baca Ebook Komik Utama
-        </a>
+    <!-- Kartu Utama dengan Efek 3D Vanilla-Tilt -->
+    <!-- data-tilt-glare memberikan efek pantulan cahaya kaca saat digerakkan -->
+    <div class="card-container" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
+        
+        <!-- Foto Profil Anda (Ganti tulisan profil.jpg jika nama file Anda berbeda) -->
+        <img src="web1/image/profil.jpg" alt="Profile" class="profile-img">
+        
+        <h1>Atshura Comics <span class="badge">PRO</span></h1>
+        <p class="bio">Webtoonist & Illustrator.<br>Membawa cerita fantasi ke dunia nyata.</p>
 
-        <!-- Tombol 2: Google Drive -->
-        <!-- Ganti tanda # di bawah dengan link Google Drive Anda -->
-        <a href="https://drive.google.com/drive/folders/1AfTmS-NxTzExIYfc2j90UXtaKpL3Z9z4?usp=drive_link" class="link-btn" target="_blank">
-            📁 Arsip Google Drive
-        </a>
+        <div class="link-container">
+            <!-- Tombol 1: Ebook Komik Utama (Website 2) -->
+            <a href="https://revianchim.me" class="link-btn primary" target="_blank">
+                <!-- Ikon Buku SVG -->
+                <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                Baca Komik Atshura
+            </a>
+
+            <!-- Tombol 2: Google Drive -->
+            <a href="https://drive.google.com/drive/folders/1AfTmS-NxTzExIYfc2j90UXtaKpL3Z9z4?usp=drive_link" class="link-btn" target="_blank">
+                <!-- Ikon Google Drive SVG -->
+                <svg viewBox="0 0 24 24"><path d="M21.16 11.23H13a.75.75 0 0 0-.65 1.13l4.08 7.07a.75.75 0 0 0 .65.37h8.16a.75.75 0 0 0 .65-1.12l-4.08-7.07a.75.75 0 0 0-.65-.38z"></path><path d="M11.66 11.23H3.5a.75.75 0 0 0-.65.38L1.33 14.1a.75.75 0 0 0 0 .75l4.08 7.07a.75.75 0 0 0 .65.37h8.16a.75.75 0 0 0 .65-1.12l-4.08-7.07a.75.75 0 0 0-.65-.38l-4.08-7.07a.75.75 0 0 0-.65-.37z"></path><path d="M12.65 9.77l-4.08-7.07A.75.75 0 0 0 7.92 2H2.33a.75.75 0 0 0-.65 1.13L11.35 19.8a.75.75 0 0 0 1.3 0l4.08-7.07a.75.75 0 0 0 0-.75l-4.08-7.07a.75.75 0 0 0-.65-.38z"></path></svg>
+                Arsip Google Drive
+            </a>
+
+            <!-- Tombol 3: Instagram / Portofolio (Sebagai tambahan agar lebih penuh) -->
+            <a href="#" class="link-btn" target="_blank">
+                <!-- Ikon Instagram SVG -->
+                <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                Instagram Kreator
+            </a>
+        </div>
+
+        <div class="footer-text">
+            © 2026 Atshura Comics
+        </div>
     </div>
 
+    <!-- === IMPORT LIBRARY PIHAK KETIGA === -->
+    <!-- 1. Particles.js untuk Latar Belakang Animasi -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <!-- 2. Vanilla-Tilt.js untuk Efek 3D pada Kartu -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
+    <!-- === KONFIGURASI ANIMASI === -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Konfigurasi Partikel (Rasi Bintang Elegan)
+            particlesJS("particles-js", {
+                "particles": {
+                    "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                    "color": { "value": "#7C3AED" }, /* Warna partikel violet */
+                    "shape": { "type": "circle" },
+                    "opacity": { "value": 0.4, "random": false },
+                    "size": { "value": 2, "random": true },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#4F46E5", /* Warna garis penghubung indigo */
+                        "opacity": 0.3,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 1.5, /* Bergerak sangat perlahan & elegan */
+                        "direction": "none",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": { "enable": true, "mode": "grab" }, /* Jaring menempel ke kursor/jari */
+                        "onclick": { "enable": true, "mode": "push" }, /* Tambah partikel saat diklik */
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": { "distance": 180, "line_linked": { "opacity": 0.6 } },
+                        "push": { "particles_nb": 3 }
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+    </script>
 </body>
 </html>
