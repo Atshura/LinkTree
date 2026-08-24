@@ -3,186 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cendikia - Creator Portal</title>
+    <title>Cendikia - Cannazera Cortezia</title>
     
-    <!-- Font Khas Action/Esports -->
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Quicksand: Sangat modern, bulat, dan memberikan kesan ceria/ramah -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* === TEMA: DARK FANTASY & BATTLEFIELD === */
+        /* === TEMA: ETHEREAL DAYDREAM (CERAH & MAGIS) === */
         :root {
-            --bg-dark: #0a0a0a;
-            --bg-darker: #050505;
-            --blood-red: #E11D48;
-            --fire-gold: #F59E0B;
-            --text-main: #FFFFFF;
-            --text-muted: #A1A1AA;
+            --text-main: #2D3748; /* Abu-abu kebiruan gelap agar nyaman dibaca */
+            --text-muted: #718096;
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.7);
+            --btn-glow: rgba(255, 154, 158, 0.4);
         }
 
         * {
             box-sizing: border-box; margin: 0; padding: 0; 
-            font-family: 'Rajdhani', sans-serif;
+            font-family: 'Quicksand', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
+        /* Latar Belakang Gradasi Animasi (Mengalir terus menerus) */
         body {
-            background-color: var(--bg-darker);
             color: var(--text-main);
             min-height: 100vh; display: flex; justify-content: center; align-items: center;
             overflow-x: hidden; position: relative;
+            /* Gradasi warna pastel cerah ala langit senja/pagi */
+            background: linear-gradient(-45deg, #A1C4FD, #C2E9FB, #FECFEF, #FDFBFB);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
         }
 
-        /* Latar Belakang Vignette (Gelap di tepi, sedikit merah di tengah) */
-        .bg-overlay {
-            position: absolute; inset: 0;
-            background: radial-gradient(circle at center, rgba(225, 29, 72, 0.1) 0%, var(--bg-darker) 70%);
-            z-index: -2;
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        /* Container Partikel Bara Api */
+        /* Container Partikel Cahaya */
         #particles-js {
             position: fixed; width: 100%; height: 100%; top: 0; left: 0;
             z-index: -1;
         }
 
-        /* === KARTU UTAMA (SHARP EDGES / RPG STYLE) === */
+        /* === KARTU UTAMA (BENTUK KAPSUL AWAN) === */
         .card-container {
-            position: relative; width: 90%; max-width: 400px;
-            /* Latar Belakang Kartu */
-            background: linear-gradient(135deg, rgba(30,30,30,0.9), rgba(15,15,15,0.95));
-            border: 1px solid rgba(225, 29, 72, 0.3);
-            /* Memotong sudut kanan atas dan kiri bawah agar tajam */
-            clip-path: polygon(0 0, 92% 0, 100% 8%, 100% 100%, 8% 100%, 0 92%);
-            padding: 40px 30px; display: flex; flex-direction: column; align-items: center;
-            box-shadow: 0 20px 50px rgba(225, 29, 72, 0.15);
+            position: relative; width: 90%; max-width: 380px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 2px solid var(--glass-border);
+            /* Bentuk kapsul yang sangat halus */
+            border-radius: 40px;
+            padding: 50px 30px; display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05), inset 0 0 0 1px rgba(255,255,255,0.5);
             z-index: 10;
-            animation: dropIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            transform: scale(1.1); opacity: 0;
+            /* Animasi masuk mengambang lembut */
+            animation: floatIn 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards, floatUpAndDown 6s ease-in-out infinite alternate;
         }
 
-        /* Aksen Garis Emas/Merah di Atas Kartu */
-        .card-container::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
-            background: linear-gradient(90deg, var(--blood-red), var(--fire-gold));
+        @keyframes floatIn {
+            from { transform: translateY(40px) scale(0.95); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
         }
 
-        @keyframes dropIn {
-            to { transform: scale(1); opacity: 1; }
+        /* Efek kartu melayang perlahan seperti awan */
+        @keyframes floatUpAndDown {
+            from { margin-top: 0px; }
+            to { margin-top: -15px; }
         }
 
-        /* === FOTO PROFIL (HEXAGON SHAPE) === */
-        .avatar-frame {
-            position: relative; width: 130px; height: 130px; margin-bottom: 20px;
+        /* === FOTO PROFIL (LIQUID BLOB ANIMATION) OUT OF THE BOX === */
+        .blob-frame {
+            position: relative; width: 140px; height: 140px; margin-bottom: 25px;
             display: flex; justify-content: center; align-items: center;
-            /* Bingkai luar heksagon */
-            background: linear-gradient(to bottom right, var(--blood-red), var(--fire-gold));
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+            /* Animasi bentuk cairan */
+            animation: liquidMorph 8s ease-in-out infinite;
+            box-shadow: 0 15px 35px rgba(161, 196, 253, 0.5);
+            overflow: hidden;
+            border: 4px solid #ffffff;
             transition: transform 0.4s ease;
         }
 
-        .avatar-frame:hover {
-            transform: rotate(15deg) scale(1.05);
+        .blob-frame:hover {
+            transform: scale(1.1) rotate(5deg);
         }
 
         .profile-img {
-            width: 122px; height: 122px; object-fit: cover;
-            /* Potongan heksagon untuk gambar */
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            background-color: var(--bg-dark);
+            width: 100%; height: 100%; object-fit: cover;
+            /* Memastikan gambar mengikuti bentuk cair dari frame-nya */
+            border-radius: inherit;
+        }
+
+        /* Rahasia Bentuk Cair (Merubah border-radius secara asimetris) */
+        @keyframes liquidMorph {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
         }
 
         /* === TIPOGRAFI / TEKS === */
         h1 { 
-            font-size: 28px; font-weight: 800; text-transform: uppercase; 
-            letter-spacing: 2px; margin-bottom: 5px; text-shadow: 2px 2px 0px rgba(225, 29, 72, 0.5);
+            font-size: 26px; font-weight: 700; color: #2D3748;
+            margin-bottom: 5px; text-align: center;
         }
         
-        .role-tag {
-            background: var(--blood-red); color: white;
-            font-size: 12px; font-weight: 700; padding: 4px 12px;
-            clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
-            text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 25px;
+        .role-text {
+            color: #ec4899; /* Pink cerah */
+            font-size: 14px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px;
+            text-align: center;
         }
 
-        /* === TOMBOL LINK (SHARP & SLASH EFFECT) === */
-        .link-container { width: 100%; display: flex; flex-direction: column; gap: 14px; }
+        /* === TOMBOL LINK (SOFT CLOUD PILLS) === */
+        .link-container { width: 100%; display: flex; flex-direction: column; gap: 16px; }
         
         .link-btn {
             position: relative; display: flex; align-items: center; justify-content: center; gap: 12px;
-            width: 100%; padding: 18px 20px; 
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255,255,255,0.1);
-            font-size: 16px; font-weight: 700; text-decoration: none; color: var(--text-main);
-            text-transform: uppercase; letter-spacing: 1px;
-            /* Sudut terpotong ala Sci-Fi/Fantasy */
-            clip-path: polygon(0 0, 95% 0, 100% 30%, 100% 100%, 5% 100%, 0 70%);
-            transition: all 0.3s ease; overflow: hidden;
+            width: 100%; padding: 18px 20px; border-radius: 100px; /* Bulat sempurna di ujung */
+            background: rgba(255, 255, 255, 0.7); 
+            border: 2px solid #ffffff;
+            font-size: 15px; font-weight: 700; text-decoration: none; color: var(--text-main);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efek membal (bouncy) */
+            overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
 
-        .link-btn svg { width: 22px; height: 22px; fill: currentColor; z-index: 2;}
+        .link-btn svg { width: 22px; height: 22px; fill: currentColor; z-index: 2; transition: transform 0.3s;}
         .link-btn span { z-index: 2; }
 
-        /* Efek Latar Hover */
+        /* Background gradasi saat di-hover */
         .link-btn::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(225, 29, 72, 0.8), transparent);
-            transition: left 0.4s ease; z-index: 1;
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(120deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            opacity: 0; transition: opacity 0.4s ease; z-index: 1;
         }
 
         .link-btn:hover {
-            border-color: var(--blood-red);
-            color: white; text-shadow: 0 0 8px rgba(255,255,255,0.5);
-            transform: translateX(5px); /* Bergerak sedikit ke kanan saat disorot */
+            color: white; border-color: transparent;
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 15px 25px var(--btn-glow);
         }
-        .link-btn:hover::before { left: 100%; /* Kilatan cahaya bergerak */ }
+        
+        .link-btn:hover::before { opacity: 1; }
+        .link-btn:hover svg { transform: rotate(-10deg) scale(1.2); }
 
-        /* Tombol Utama (Berdar Merah) */
-        .link-btn.primary {
-            background: rgba(225, 29, 72, 0.15); border-color: var(--blood-red);
-        }
-        .link-btn.primary:hover {
-            background: var(--blood-red);
-        }
-
-        .footer-text { margin-top: 30px; font-size: 12px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; }
+        .footer-text { margin-top: 35px; font-size: 13px; color: var(--text-muted); font-weight: 600; letter-spacing: 1px; }
     </style>
 </head>
 <body>
-
-    <div class="bg-overlay"></div>
     
-    <!-- Partikel Bara Api -->
+    <!-- Partikel Cahaya Magis (Bukan jaring atau garis, melainkan bulatan cahaya) -->
     <div id="particles-js"></div>
 
-    <!-- Kartu Utama -->
-    <div class="card-container" data-tilt data-tilt-max="5" data-tilt-speed="400">
+    <!-- Kartu dengan efek melayang 3D (Sangat Halus) -->
+    <div class="card-container" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.5">
         
-        <!-- Frame Hexagon Foto Profil -->
-        <div class="avatar-frame">
-            <!-- Ganti src ke nama file foto Anda, contoh: profil.jpg atau cover.png -->
+        <!-- Frame Liquid Blob -->
+        <div class="blob-frame">
+            <!-- Ganti src ke nama file foto Anda (contoh: profil.jpg atau cover.png) -->
             <img src="profil.jpg" alt="Profile" class="profile-img">
         </div>
         
-        <!-- Nama Utama Diubah Menjadi Cendikia -->
         <h1>Cendikia</h1>
-        <div class="role-tag">Creator & Webtoonist</div>
+        <div class="role-text">Cannazera Cortezia</div>
 
         <div class="link-container">
             <!-- Tombol 1: Baca Komik -->
-            <a href="https://revianchim.me" class="link-btn primary" target="_blank">
+            <a href="https://revianchim.me" class="link-btn" target="_blank">
                 <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-                <span>Baca Komik Utama</span>
+                <span>Mulai Petualangan</span>
             </a>
 
             <!-- Tombol 2: Google Drive -->
             <a href="#" class="link-btn" target="_blank">
                 <svg viewBox="0 0 24 24"><path d="M21.16 11.23H13a.75.75 0 0 0-.65 1.13l4.08 7.07a.75.75 0 0 0 .65.37h8.16a.75.75 0 0 0 .65-1.12l-4.08-7.07a.75.75 0 0 0-.65-.38z"></path><path d="M11.66 11.23H3.5a.75.75 0 0 0-.65.38L1.33 14.1a.75.75 0 0 0 0 .75l4.08 7.07a.75.75 0 0 0 .65.37h8.16a.75.75 0 0 0 .65-1.12l-4.08-7.07a.75.75 0 0 0-.65-.38l-4.08-7.07a.75.75 0 0 0-.65-.37z"></path><path d="M12.65 9.77l-4.08-7.07A.75.75 0 0 0 7.92 2H2.33a.75.75 0 0 0-.65 1.13L11.35 19.8a.75.75 0 0 0 1.3 0l4.08-7.07a.75.75 0 0 0 0-.75l-4.08-7.07a.75.75 0 0 0-.65-.38z"></path></svg>
                 <span>Arsip Google Drive</span>
-            </a>
-
-            <!-- Tombol 3: Dukungan / Info Tambahan -->
-            <a href="#" class="link-btn" target="_blank">
-                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                <span>Dukung Kreator</span>
             </a>
         </div>
 
@@ -195,29 +191,29 @@
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 
-    <!-- KONFIGURASI BARA API MELAYANG (FIRE EMBERS) -->
+    <!-- KONFIGURASI MAGICAL LIGHT ORBS (BOKEH CERAH) -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             particlesJS("particles-js", {
                 "particles": {
-                    "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-                    "color": { "value": ["#E11D48", "#F59E0B"] },
+                    "number": { "value": 40, "density": { "enable": true, "value_area": 800 } },
+                    "color": { "value": ["#ffffff", "#fef08a", "#fbcfe8"] }, /* Warna cahaya magis */
                     "shape": { "type": "circle" },
                     "opacity": { 
-                        "value": 0.8, 
+                        "value": 0.6, 
                         "random": true, 
                         "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false }
                     },
                     "size": { 
-                        "value": 4, 
+                        "value": 15, /* Ukuran partikel dibesarkan agar seperti bokeh/cahaya blur */
                         "random": true,
-                        "anim": { "enable": true, "speed": 2, "size_min": 0.1, "sync": false }
+                        "anim": { "enable": true, "speed": 2, "size_min": 5, "sync": false }
                     },
-                    "line_linked": { "enable": false },
+                    "line_linked": { "enable": false }, /* Jaring dihapus */
                     "move": {
                         "enable": true,
-                        "speed": 2,
-                        "direction": "top",
+                        "speed": 1, /* Bergerak sangat lambat dan tenang */
+                        "direction": "top", 
                         "random": true,
                         "straight": false,
                         "out_mode": "out",
@@ -227,13 +223,13 @@
                 "interactivity": {
                     "detect_on": "canvas",
                     "events": {
-                        "onhover": { "enable": true, "mode": "repulse" },
-                        "onclick": { "enable": true, "mode": "push" },
+                        "onhover": { "enable": true, "mode": "bubble" }, /* Cahaya membesar jika disentuh */
+                        "onclick": { "enable": true, "mode": "repulse" }, /* Menyebar jika diklik */
                         "resize": true
                     },
                     "modes": {
-                        "repulse": { "distance": 100, "duration": 0.4 },
-                        "push": { "particles_nb": 4 }
+                        "bubble": { "distance": 200, "size": 30, "duration": 2, "opacity": 0.8 },
+                        "repulse": { "distance": 200, "duration": 0.4 }
                     }
                 },
                 "retina_detect": true
